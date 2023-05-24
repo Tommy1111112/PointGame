@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Points Game</title>
+  <script src="ExpantaNum.js"></script>
+  <script src="script.js"></script>
+  <script src="format.js"></script>  
+  <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body class="BG">
+  <table>
+    <tr>
+      <td colspan="2" class="NUMTXT">
+        <h1>Points: <span id="NUM">0</span></h1>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" class="CTN">
+        <button class="NUMBTN" onclick="GainNUM()">Generate Points</button>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" class="UPGRADE">
+        <table>
+          <!-- Generate upgrade rows dynamically -->
+          <!-- You can add more upgrades to the 'upgrades' array -->
+          <!-- Each upgrade will be rendered as a separate table row -->
+          <!-- The 'BuyUpgrade' function is called with the corresponding upgrade id -->
+          <!-- The upgrade properties are dynamically populated using JavaScript -->
+          <tr>
+            <td>
+              <p id="NUMUPG1TITLE">Upgrade I</p>
+              <p id="NUMUPG1TEXT">2x Point / click</p>
+              <button id="BuyButton1" onclick="BuyUpgrade(1)">Cost: <span id="COSTUPG1">5</span></button>
+            </td>
+            <td>
+              <p id="NUMUPG2TITLE">Upgrade II</p>
+              <p id="NUMUPG2TEXT">2x Point / click</p>
+              <button id="BuyButton2" onclick="BuyUpgrade(2)">Cost: <span id="COSTUPG2">25</span></button>
+            </td>
+            <td>
+              <p id="NUMUPG3TITLE">Upgrade III</p>
+              <p id="NUMUPG3TEXT">2.5x Point / click</p>
+              <button id="BuyButton3" onclick="BuyUpgrade(3)">Cost: <span id="COSTUPG3">125</span></button>
+            </td>
+            <td>
+              <p id="NUMUPG4TITLE">Upgrade IV</p>
+              <p id="NUMUPG4TEXT">3x Point / click</p>
+              <button id="BuyButton4" onclick="BuyUpgrade(4)">Cost: <span id="COSTUPG4">625</span></button>
+            </td>
+          </tr>
+          <!-- Add more upgrade rows here as needed -->
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

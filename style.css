@@ -1,0 +1,47 @@
+/*Styling part
+
+Literally go wild in here. Classes use . as identification and ids use # as identification 
+*/
+
+@font-face {
+  font-family: Analogue;
+  src: url('CooperHewitt-Medium.otf')
+}
+.BG {
+  z-index: -9999;
+  background-color: #000000;
+}
+
+.CTN {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#NUM {
+  text-shadow: 0px 0px 20px;
+}
+
+.NUMTXT {
+  color: #ffffff;
+  font-family: Analogue;
+  font-size: 30px;
+  text-align: center;
+}
+
+.NUMBTN {
+  font-family: Analogue;
+  font-size: 25px;
+  width: auto;
+  height: auto;
+  text-align: center;
+}
+
+.UPGRADE {
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  text-align: center;
+}
