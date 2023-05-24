@@ -42,6 +42,6 @@ Literally go wild in here. Classes use . as identification and ids use # as iden
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 5px;
+  margin: 10px;
   text-align: center;
 }

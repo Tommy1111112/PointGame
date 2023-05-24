@@ -6,7 +6,7 @@ let upgrades = [
     id: 1,
     title: "UPGRADE I",
     description: "2x Point",
-    cost: new ExpantaNum(5),
+    cost: new ExpantaNum(500),
     effect: new ExpantaNum(1),
     level: new ExpantaNum(0),
     costMultiplier: new ExpantaNum(5),
@@ -16,7 +16,7 @@ let upgrades = [
     id: 2,
     title: "UPGRADE II",
     description: "2x Point",
-    cost: new ExpantaNum(25),
+    cost: new ExpantaNum(5000),
     effect: new ExpantaNum(1),
     level: new ExpantaNum(0),
     costMultiplier: new ExpantaNum(5),
@@ -26,7 +26,7 @@ let upgrades = [
     id: 3,
     title: "UPGRADE III",
     description: "2.5x Point",
-    cost: new ExpantaNum(125),
+    cost: new ExpantaNum(60000),
     effect: new ExpantaNum(1),
     level: new ExpantaNum(0),
     costMultiplier: new ExpantaNum(7.5),
@@ -36,12 +36,45 @@ let upgrades = [
     id: 4,
     title: "UPGRADE IV",
     description: "3x Point",
-    cost: new ExpantaNum(625),
+    cost: new ExpantaNum(150000),
+    effect: new ExpantaNum(1),
+    level: new ExpantaNum(0),
+    costMultiplier: new ExpantaNum(10),
+    effectMultiplier: new ExpantaNum(3)
+  },
+  {
+    id: 5,
+    title: "UPGRADE V",
+    description: "5x Point",
+    cost: new ExpantaNum(1e9),
     effect: new ExpantaNum(1),
     level: new ExpantaNum(0),
     costMultiplier: new ExpantaNum(10),
     effectMultiplier: new ExpantaNum(3)
   }
+];
+
+let ultraUpgrades = [
+  {
+    id: 1,
+    title: "ULTRA UPGRADE I",
+    description: "8x Point but reset normal upgrades",
+    cost: new ExpantaNum("1e200"),
+    effect: new ExpantaNum(1),
+    level: new ExpantaNum(0),
+    costMultiplier: new ExpantaNum(1e10),
+    effectMultiplier: new ExpantaNum(8)
+  },
+  {
+    id: 2,
+    title: "ULTRA UPGRADE II",
+    description: "45x Point but reset normal upgrades",
+    cost: new ExpantaNum("1e1700"),
+    effect: new ExpantaNum(1),
+    level: new ExpantaNum(0),
+    costMultiplier: new ExpantaNum(1e10),
+    effectMultiplier: new ExpantaNum(45)
+  },
 ];
 
 function GainNUM() {
@@ -69,9 +102,6 @@ function BuyUpgrade(upgradeId) {
   UpdateNUMTEXT();
 }
 
-function UpdateNUMTEXT() {
-  document.getElementById('NUM').textContent = formatWithExponent(NUM);
-}
 function formatWithExponent(num) {
   // Convert the number to ExpantaNum for precision
   const expNum = new ExpantaNum(num);
@@ -92,10 +122,33 @@ function formatWithExponent(num) {
   return `${formattedMantissa} * 10^${exponent}`;
 }
 
+function BuyUltraUpgrade(ultraUpgradeId) {
+  let ultraUpgrade = ultraUpgrades.find(uu => uu.id === ultraUpgradeId);
+  if (NUM.gte(ultraUpgrade.cost)) {
+    NUM = NUM.sub(ultraUpgrade.cost);
+    ultraUpgrade.cost = ultraUpgrade.cost.mul(ultraUpgrade.costMultiplier);
+    ultraUpgrade.level = ultraUpgrade.level.add(1);
+    ultraUpgrade.effect = ultraUpgrade.effect.mul(ultraUpgrade.effectMultiplier);
+  }
+  UpdateUltraUpgradeText(ultraUpgrade);
+  UpdateNUMTEXT();
+}
+
+function UpdateNUMTEXT() {
+  document.getElementById('NUM').textContent = formatWithExponent(NUM);
+}
+
 function UpdateUpgradeText(upgrade) {
   let costElement = document.getElementById(`COSTUPG${upgrade.id}`);
   if (costElement) {
     costElement.textContent = formatWithExponent(upgrade.cost)
+  }
+}
+
+function UpdateUltraUpgradeText(ultraUpgrade) {
+  let costElement = document.getElementById(`COSTULTRAUPG${ultraUpgrade.id}`);
+  if (costElement) {
+    costElement.textContent = formatWithExponent(ultraUpgrade.cost)
   }
 }
 
@@ -104,4 +157,8 @@ UpdateNUMTEXT();
 // Update upgrade text for each upgrade
 for (let upgrade of upgrades) {
   UpdateUpgradeText(upgrade);
+}
+
+for (let ultraUpgrade of ultraUpgrades) {
+  UpdateUltraUpgradeText(ultraUpgrade);
 }
