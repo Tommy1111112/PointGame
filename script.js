@@ -1,4 +1,5 @@
-let NUM = new ExpantaNum(0);
+let NUM = new ExpantaNum(10);
+
 let NUMPC = new ExpantaNum(1);
 
 let upgrades = [
@@ -59,7 +60,7 @@ let ultraUpgrades = [
     id: 1,
     title: "ULTRA UPGRADE I",
     description: "8x Point but reset normal upgrades",
-    cost: new ExpantaNum("1e200"),
+    cost: new ExpantaNum(1e200),
     effect: new ExpantaNum(1),
     level: new ExpantaNum(0),
     costMultiplier: new ExpantaNum(1e10),
@@ -87,6 +88,9 @@ function CalculateNUMPC() {
   for (let upgrade of upgrades) {
     PC = PC.mul(upgrade.effect);
   }
+  for (let ultraUpgrade of ultraUpgrades) {
+	  PC = PC.mul(ultraUpgrade.effect);
+  }
   return PC;
 }
 
@@ -102,9 +106,9 @@ function BuyUpgrade(upgradeId) {
   UpdateNUMTEXT();
 }
 
-function formatWithExponent(num) {
+function formatWithExponent(NUM) {
   // Convert the number to ExpantaNum for precision
-  const expNum = new ExpantaNum(num);
+  const expNum = new ExpantaNum(NUM);
 
   // Check if the number is already in scientific notation
   if (expNum.gte("0")) {
@@ -135,9 +139,13 @@ function BuyUltraUpgrade(ultraUpgradeId) {
 }
 
 function UpdateNUMTEXT() {
-  document.getElementById('NUM').textContent = formatWithExponent(NUM);
+	let unformatted = document.getElementById('NUM');
+	if(unformatted != null) {
+		let formatted = formatWithExponent(NUM);
+		unformatted.textContent = formatted;
+	}
 }
-
+		
 function UpdateUpgradeText(upgrade) {
   let costElement = document.getElementById(`COSTUPG${upgrade.id}`);
   if (costElement) {
