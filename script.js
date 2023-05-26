@@ -2,6 +2,7 @@
 
 let NUM = new ExpantaNum(10);
 let NUMPC = new ExpantaNum(1);
+let PG = true;
 
 let upgrades = [
   {
@@ -11,7 +12,7 @@ let upgrades = [
     cost: new ExpantaNum(100),
     effect: new ExpantaNum(1),
     level: new ExpantaNum(0),
-    costMultiplier: new ExpantaNum(3),
+    costMultiplier: new ExpantaNum(5),
     effectMultiplier: new ExpantaNum(2)
   },
   {
@@ -21,7 +22,7 @@ let upgrades = [
     cost: new ExpantaNum(2000),
     effect: new ExpantaNum(1),
     level: new ExpantaNum(0),
-    costMultiplier: new ExpantaNum(3.5),
+    costMultiplier: new ExpantaNum(7),
     effectMultiplier: new ExpantaNum(2)
   },
   {
@@ -31,7 +32,7 @@ let upgrades = [
     cost: new ExpantaNum(45000),
     effect: new ExpantaNum(1),
     level: new ExpantaNum(0),
-    costMultiplier: new ExpantaNum(5),
+    costMultiplier: new ExpantaNum(9),
     effectMultiplier: new ExpantaNum(2.5)
   },
   {
@@ -41,7 +42,7 @@ let upgrades = [
     cost: new ExpantaNum(125000),
     effect: new ExpantaNum(1),
     level: new ExpantaNum(0),
-    costMultiplier: new ExpantaNum(7.5),
+    costMultiplier: new ExpantaNum(11),
     effectMultiplier: new ExpantaNum(3)
   },
   {
@@ -51,9 +52,39 @@ let upgrades = [
     cost: new ExpantaNum(1e9),
     effect: new ExpantaNum(1),
     level: new ExpantaNum(0),
-    costMultiplier: new ExpantaNum(10),
+    costMultiplier: new ExpantaNum(13),
     effectMultiplier: new ExpantaNum(3)
-  }
+  },
+  {
+    id: 6,
+    title: "OP UPGRADE I",
+    description: "15x Point",
+    cost: new ExpantaNum(1e70),
+    effect: new ExpantaNum(1),
+    level: new ExpantaNum(0),
+    costMultiplier: new ExpantaNum(1e7),
+    effectMultiplier: new ExpantaNum(15)
+  },
+  {
+    id: 7,
+    title: "OP UPGRADE II",
+    description: "27x Point",
+    cost: new ExpantaNum(1e160),
+    effect: new ExpantaNum(1),
+    level: new ExpantaNum(0),
+    costMultiplier: new ExpantaNum(1e15),
+    effectMultiplier: new ExpantaNum(27)
+  },
+  {
+    id: 8,
+    title: "OP UPGRADE III",
+    description: "45x Point",
+    cost: new ExpantaNum(1e240),
+    effect: new ExpantaNum(1),
+    level: new ExpantaNum(0),
+    costMultiplier: new ExpantaNum(1e70),
+    effectMultiplier: new ExpantaNum(45)
+  },
 ];
 
 let ultraUpgrades = [
@@ -209,6 +240,7 @@ function UpdateUltraUpgradeText(ultraUpgrade) {
     costElement.textContent = formatWithExponent(ultraUpgrade.cost)
   }
 }
+
 
 UpdateNUMTEXT();
 for (let i = 0; i < upgrades.length; i++) {
