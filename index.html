@@ -4,6 +4,8 @@
   <title>Points Game</title>
   <script src="ExpantaNum.js"></script>
   <script src="script.js"></script>
+  <script src="format.js"></script>
+  <script src="save.js"></script>
   <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body class="BG">
@@ -30,45 +32,32 @@
             <td>
               <p id="NUMUPG1TITLE">Upgrade I</p>
               <p id="NUMUPG1TEXT">2x Point / click</p>
-              <button id="BuyButton1" onclick="BuyUpgrade(1)">Cost: <span id="COSTUPG1">500</span></button>
+              <button id="BuyButton1" onclick="BuyUpgrade(1)">Cost: <span id="COSTUPG1">1.000e2</span></button>
             </td>
             <td>
               <p id="NUMUPG2TITLE">Upgrade II</p>
               <p id="NUMUPG2TEXT">2x Point / click</p>
-              <button id="BuyButton2" onclick="BuyUpgrade(2)">Cost: <span id="COSTUPG2">5000</span></button>
+              <button id="BuyButton2" onclick="BuyUpgrade(2)">Cost: <span id="COSTUPG2">2.000e3</span></button>
             </td>
             <td>
               <p id="NUMUPG3TITLE">Upgrade III</p>
               <p id="NUMUPG3TEXT">2.5x Point / click</p>
-              <button id="BuyButton3" onclick="BuyUpgrade(3)">Cost: <span id="COSTUPG3">60000</span></button>
+              <button id="BuyButton3" onclick="BuyUpgrade(3)">Cost: <span id="COSTUPG3">4.500e4</span></button>
             </td>
             <td>
               <p id="NUMUPG4TITLE">Upgrade IV</p>
               <p id="NUMUPG4TEXT">3x Point / click</p>
-              <button id="BuyButton4" onclick="BuyUpgrade(4)">Cost: <span id="COSTUPG4">150000</span></button>
+              <button id="BuyButton4" onclick="BuyUpgrade(4)">Cost: <span id="COSTUPG4">1.250e5</span></button>
             </td>
 			<td>
               <p id="NUMUPG5TITLE">Upgrade V</p>
               <p id="NUMUPG5TEXT">5x Point / click</p>
-              <button id="BuyButton5" onclick="BuyUpgrade(5)">Cost: <span id="COSTUPG5">1e9</span></button>
+              <button id="BuyButton5" onclick="BuyUpgrade(5)">Cost: <span id="COSTUPG5">1.000e9</span></button>
             </td>
 			
 			
           </tr>
-		  <tr>
-		  <td>
-				
-              <p id="ULTUPG1TITLE">Ultra Upgrade I</p>
-              <p id="ULTUPG1TEXT">Reset upgrades for 8x points</p>
-              <button id="BuyButton6" onclick="buyUltaUpgrade(1)">Cost: <span id="COSTULTRAUPG1">"1e200"</span></button>
-            </td>
-			<td>
-				
-              <p id="ULTUPG2TITLE">Ultra Upgrade II</p>
-              <p id="ULTUPG2TEXT">Reset upgrades for 45x points</p>
-              <button id="BuyButton7" onclick="buyUltaUpgrade(2)">Cost: <span id="COSTULTRAUPG2">"1e1700"</span></button>
-            </td>
-		  </tr>
+		 
 		  
           <!-- Add more upgrade rows here as needed -->
         </table>

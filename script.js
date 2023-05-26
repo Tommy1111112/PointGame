@@ -1,5 +1,6 @@
-let NUM = new ExpantaNum(10);
 
+
+let NUM = new ExpantaNum(10);
 let NUMPC = new ExpantaNum(1);
 
 let upgrades = [
@@ -7,40 +8,40 @@ let upgrades = [
     id: 1,
     title: "UPGRADE I",
     description: "2x Point",
-    cost: new ExpantaNum(500),
+    cost: new ExpantaNum(100),
     effect: new ExpantaNum(1),
     level: new ExpantaNum(0),
-    costMultiplier: new ExpantaNum(5),
+    costMultiplier: new ExpantaNum(3),
     effectMultiplier: new ExpantaNum(2)
   },
   {
     id: 2,
     title: "UPGRADE II",
     description: "2x Point",
-    cost: new ExpantaNum(5000),
+    cost: new ExpantaNum(2000),
     effect: new ExpantaNum(1),
     level: new ExpantaNum(0),
-    costMultiplier: new ExpantaNum(5),
+    costMultiplier: new ExpantaNum(3.5),
     effectMultiplier: new ExpantaNum(2)
   },
   {
     id: 3,
     title: "UPGRADE III",
     description: "2.5x Point",
-    cost: new ExpantaNum(60000),
+    cost: new ExpantaNum(45000),
     effect: new ExpantaNum(1),
     level: new ExpantaNum(0),
-    costMultiplier: new ExpantaNum(7.5),
+    costMultiplier: new ExpantaNum(5),
     effectMultiplier: new ExpantaNum(2.5)
   },
   {
     id: 4,
     title: "UPGRADE IV",
     description: "3x Point",
-    cost: new ExpantaNum(150000),
+    cost: new ExpantaNum(125000),
     effect: new ExpantaNum(1),
     level: new ExpantaNum(0),
-    costMultiplier: new ExpantaNum(10),
+    costMultiplier: new ExpantaNum(7.5),
     effectMultiplier: new ExpantaNum(3)
   },
   {
@@ -75,13 +76,71 @@ let ultraUpgrades = [
     level: new ExpantaNum(0),
     costMultiplier: new ExpantaNum(1e10),
     effectMultiplier: new ExpantaNum(45)
-  },
+  }
 ];
+
+
+
+function loadPlayerData() {
+  const savedData = localStorage.getItem('playerData');
+  if (savedData) {
+    const parsedData = JSON.parse(savedData);
+    NUM = new ExpantaNum(parsedData.NUM);
+    NUMPC = new ExpantaNum(parsedData.NUMPC);
+    for (let i = 0; i < upgrades.length; i++) {
+      upgrades[i].level = new ExpantaNum(parsedData.upgrades[i].level);
+      upgrades[i].cost = new ExpantaNum(parsedData.upgrades[i].cost);
+      upgrades[i].effect = new ExpantaNum(parsedData.upgrades[i].effect);
+      // Update HTML elements for upgrades
+      UpdateUpgradeText(upgrades[i]);
+	  
+    }
+    for (let i = 0; i < ultraUpgrades.length; i++) {
+      ultraUpgrades[i].level = new ExpantaNum(parsedData.ultraUpgrades[i].level);
+      ultraUpgrades[i].cost = new ExpantaNum(parsedData.ultraUpgrades[i].cost);
+      ultraUpgrades[i].effect = new ExpantaNum(parsedData.ultraUpgrades[i].effect);
+      // Update HTML elements for ultra upgrades
+      UpdateUltraUpgradeText(ultraUpgrades[i]);
+    }
+    UpdateNUMTEXT(); // Update points display
+  }
+}
+
+// Save player data to localStorage
+function savePlayerData() {
+  const playerData = {
+    NUM: NUM.toString(),
+    NUMPC: NUMPC.toString(),
+    upgrades: upgrades.map(upgrade => ({
+      level: upgrade.level.toString(),
+      cost: upgrade.cost.toString(),
+      effect: upgrade.effect.toString()
+    })),
+    ultraUpgrades: ultraUpgrades.map(ultraUpgrade => ({
+      level: ultraUpgrade.level.toString(),
+      cost: ultraUpgrade.cost.toString(),
+      effect: ultraUpgrade.effect.toString()
+    }))
+  };
+  localStorage.setItem('playerData', JSON.stringify(playerData));
+}
+
 
 function GainNUM() {
   NUM = NUM.add(CalculateNUMPC());
   UpdateNUMTEXT();
+  savePlayerData();
 }
+
+loadPlayerData();
+for (let upgrade of upgrades) {
+  UpdateUpgradeText(upgrade);
+}
+
+for (let ultraUpgrade of ultraUpgrades) {
+  UpdateUltraUpgradeText(ultraUpgrade);
+}
+UpdateNUMTEXT();
 
 function CalculateNUMPC() {
   let PC = new ExpantaNum(NUMPC);
@@ -106,34 +165,23 @@ function BuyUpgrade(upgradeId) {
   UpdateNUMTEXT();
 }
 
-function formatWithExponent(NUM) {
-  // Convert the number to ExpantaNum for precision
-  const expNum = new ExpantaNum(NUM);
-
-  // Check if the number is already in scientific notation
-  if (expNum.gte("0")) {
-    return expNum.toExponential(3);
-  }
-
-  // Determine the exponent
-  const exponent = expNum.log10().floor();
-
-  // Calculate the mantissa (coefficient) and format it
-  const mantissa = expNum.div(ExpantaNum.pow(10, exponent));
-  const formattedMantissa = mantissa.toFixed(3);
-
-  // Format the final number with the "10^" notation
-  return `${formattedMantissa} * 10^${exponent}`;
-}
-
 function BuyUltraUpgrade(ultraUpgradeId) {
   let ultraUpgrade = ultraUpgrades.find(uu => uu.id === ultraUpgradeId);
   if (NUM.gte(ultraUpgrade.cost)) {
-    NUM = NUM.sub(ultraUpgrade.cost);
+    NUM = new ExpantaNum(10);
+	NUMPC = new ExpantaNum(1);
     ultraUpgrade.cost = ultraUpgrade.cost.mul(ultraUpgrade.costMultiplier);
     ultraUpgrade.level = ultraUpgrade.level.add(1);
     ultraUpgrade.effect = ultraUpgrade.effect.mul(ultraUpgrade.effectMultiplier);
+
+    for (let i = 0; i < upgrades.length; i++) {
+      upgrades[i].cost = upgrades[i].cost.div(upgrades[i].costMultiplier);
+      upgrades[i].level = new ExpantaNum(0);
+      upgrades[i].effect = new ExpantaNum(1);
+      UpdateUpgradeText(upgrades[i]);
+    }
   }
+  savePlayerData();
   UpdateUltraUpgradeText(ultraUpgrade);
   UpdateNUMTEXT();
 }
@@ -143,6 +191,8 @@ function UpdateNUMTEXT() {
 	if(unformatted != null) {
 		let formatted = formatWithExponent(NUM);
 		unformatted.textContent = formatted;
+		
+		
 	}
 }
 		
@@ -161,12 +211,6 @@ function UpdateUltraUpgradeText(ultraUpgrade) {
 }
 
 UpdateNUMTEXT();
-
-// Update upgrade text for each upgrade
-for (let upgrade of upgrades) {
-  UpdateUpgradeText(upgrade);
-}
-
-for (let ultraUpgrade of ultraUpgrades) {
-  UpdateUltraUpgradeText(ultraUpgrade);
+for (let i = 0; i < upgrades.length; i++) {
+    UpdateUpgradeText(upgrades[i]);
 }
